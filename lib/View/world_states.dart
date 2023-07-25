@@ -54,7 +54,7 @@ class _WorldStatesScreenState extends State<WorldStatesScreen>
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: MediaQuery.of(context).size.height * .06),
-              child: Card(
+              child: const Card(
                 child: Column(
                   children: [
                     ReusableRow(
