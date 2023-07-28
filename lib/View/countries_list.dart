@@ -9,10 +9,10 @@ class CountriesListScreen extends StatefulWidget {
 }
 
 class _CountriesListScreenState extends State<CountriesListScreen> {
-  StatesServices statesServices = StatesServices();
   TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    StatesServices statesServices = StatesServices();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,11 +39,19 @@ class _CountriesListScreenState extends State<CountriesListScreen> {
                     if (!snapshot.hasData) {
                       return const Text('Loading');
                     } else {
-                      return ListView.builder(itemBuilder: (context, index) {
-                        return const Column(
-                          children: [],
-                        );
-                      });
+                      return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                ListTile(
+                                  leading: Image(
+                                      image: NetworkImage(snapshot.data![index]
+                                          ['countryInfo']['flag'])),
+                                )
+                              ],
+                            );
+                          });
                     }
                   }))
         ],

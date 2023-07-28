@@ -97,14 +97,14 @@ class _WorldStatesScreenState extends State<WorldStatesScreen>
                                   title: "Deaths",
                                   value: snapshot.data!.deaths.toString(),
                                 ),
-                                ReusableRow(
-                                  title: "Active",
-                                  value: snapshot.data!.active.toString(),
-                                ),
-                                ReusableRow(
-                                  title: "Critical",
-                                  value: snapshot.data!.critical.toString(),
-                                ),
+                                // ReusableRow(
+                                //   title: "Active",
+                                //   value: snapshot.data!.active.toString(),
+                                // ),
+                                // ReusableRow(
+                                //   title: "Critical",
+                                //   value: snapshot.data!.critical.toString(),
+                                // ),
                                 ReusableRow(
                                   title: "Today Deaths",
                                   value: snapshot.data!.todayDeaths.toString(),
