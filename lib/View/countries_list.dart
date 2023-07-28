@@ -1,5 +1,6 @@
 import 'package:covid_tracker/Services/states_services.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CountriesListScreen extends StatefulWidget {
   const CountriesListScreen({super.key});
@@ -25,6 +26,9 @@ class _CountriesListScreenState extends State<CountriesListScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
               controller: searchController,
+              onChanged: (value) {
+                setState(() {});
+              },
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                   hintText: 'Search with country name',
@@ -37,20 +41,89 @@ class _CountriesListScreenState extends State<CountriesListScreen> {
                   future: statesServices.countriesListApi(),
                   builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                     if (!snapshot.hasData) {
-                      return const Text('Loading');
+                      return ListView.builder(
+                          itemCount: 4,
+                          itemBuilder: (context, index) {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey.shade700,
+                              highlightColor: Colors.grey.shade700,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Container(
+                                      height: 10,
+                                      width: 80,
+                                      color: Colors.white,
+                                    ),
+                                    subtitle: Container(
+                                      height: 10,
+                                      width: 80,
+                                      color: Colors.white,
+                                    ),
+                                    leading: Container(
+                                      height: 50,
+                                      width: 50,
+                                      color: Colors.white,
+                                    ),
+                                    trailing: Container(
+                                      height: 10,
+                                      width: 30,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          });
                     } else {
                       return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                ListTile(
-                                  leading: Image(
-                                      image: NetworkImage(snapshot.data![index]
-                                          ['countryInfo']['flag'])),
-                                )
-                              ],
-                            );
+                            String name = snapshot.data![index]['country'];
+                            if (searchController.text.isEmpty) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title:
+                                        Text(snapshot.data![index]['country']),
+                                    subtitle: Text(snapshot.data![index]
+                                            ['cases']
+                                        .toString()),
+                                    leading: Image(
+                                        height: 50,
+                                        width: 50,
+                                        image: NetworkImage(
+                                            snapshot.data![index]['countryInfo']
+                                                ['flag'])),
+                                    trailing: Text(
+                                        snapshot.data![index]['continent']),
+                                  )
+                                ],
+                              );
+                            } else if (name.toLowerCase().contains(
+                                searchController.text.toLowerCase())) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title:
+                                        Text(snapshot.data![index]['country']),
+                                    subtitle: Text(snapshot.data![index]
+                                            ['cases']
+                                        .toString()),
+                                    leading: Image(
+                                        height: 50,
+                                        width: 50,
+                                        image: NetworkImage(
+                                            snapshot.data![index]['countryInfo']
+                                                ['flag'])),
+                                    trailing: Text(
+                                        snapshot.data![index]['continent']),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return Container();
+                            }
                           });
                     }
                   }))

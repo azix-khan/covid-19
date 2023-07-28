@@ -78,6 +78,13 @@ class _WorldStatesScreenState extends State<WorldStatesScreen>
                           chartType: ChartType.ring,
                           colorList: colorList,
                         ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .03,
+                        ),
+                        const Text(
+                          'COVID-19 WorldWide',
+                          style: TextStyle(color: Color(0xff03fca1)),
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               vertical:
